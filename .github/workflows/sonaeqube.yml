@@ -1,0 +1,25 @@
+name: Build
+on:
+  pull_request:
+    branches:
+      - develop
+jobs:
+  build:
+    name: Build
+    runs-on: [self-hosted]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+
+# How to setup
+# 1. open sonarqube server on http://171.100.62.50:9000/
+# 2. create a new project button on the top right
+# 3. select github
+# 4. select project repository on github
+# 5. follow the step by step

@@ -1,0 +1,23 @@
+name: CI/CD on self host docker
+
+on:
+  push:
+    branches: ["feat/cicd"]
+
+jobs:
+  run:
+    runs-on: [self-hosted-berry]
+    steps:
+      - uses: actions/checkout@v3
+      - name: download env file
+        run: export DOPPLER_TOKEN=${{secrets.DOPPLER_TOKEN}} && doppler secrets download --no-file --format=env >> .env && unset DOPPLER_TOKEN
+      - name: Compose down
+        run: docker-compose down
+      - name: Compose build
+        run: docker-compose build
+      - name: Compose up
+        run: docker-compose up -d
+      - name: view working path
+        run: echo whoami && echo pwd
+      - name : delete .env file
+        run: rm -rf .env*

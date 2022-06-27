@@ -1,0 +1,13 @@
+version: "3.4"
+services:
+  berry-skeleton:
+    image: berry-skeleton
+    restart: always
+    container_name: berry-skeleton
+    build:
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - 51106:3000
+    env_file:
+      - .env
